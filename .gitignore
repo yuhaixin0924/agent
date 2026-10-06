@@ -1,0 +1,60 @@
+# API 密钥与本地配置（示例模板可以提交）
+.env
+.env.*
+!.env.example
+
+# macOS / Windows 系统生成文件
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Python 字节码与编译扩展
+__pycache__/
+*.py[cod]
+*.so
+
+# 虚拟环境、打包和构建产物
+.venv/
+venv/
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# 测试、检查工具的缓存与覆盖率报告
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.tox/
+.nox/
+
+# C / C++ 编译与链接产物
+*.o
+*.obj
+*.a
+*.lib
+*.dylib
+*.dll
+*.exe
+*.out
+*.dSYM/
+
+# 编辑器交换文件、临时文件与日志
+*.swp
+*.swo
+*~
+*.tmp
+*.temp
+*.log
+
+# 本项目的运行记录和爬虫输出
+runs/
+/hn_items.json
