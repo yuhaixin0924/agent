@@ -1,4 +1,4 @@
-"""OpenAI-compatible Chat Completions 适配；无需安装 SDK。"""
+"""实习助手的 Chat Completions 模型适配；无需安装 SDK。"""
 
 import os
 from pathlib import Path
@@ -44,7 +44,7 @@ class ChatClient:
         values = [os.environ.get(name, "").strip()
                   for name in ("LLM_API_KEY", "LLM_BASE_URL", "LLM_MODEL")]
         if not all(values):
-            raise ValueError("请在 .env 配置 LLM_API_KEY、LLM_BASE_URL、LLM_MODEL；可先运行 demo。")
+            raise ValueError("请在 .env 配置 LLM_API_KEY、LLM_BASE_URL、LLM_MODEL。")
         return cls(*values)
 
     def complete(self, messages, tools, *, require_tool=False):

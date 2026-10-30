@@ -1,134 +1,102 @@
-# 个人信息雷达 Agent
+# 实习机会评估助手
 
-一个便于逐步阅读、修改的轻量 Agent。仅使用 Python 3.10+ 标准库，无需安装依赖。
-现阶段接入 Hacker News 帖子与评论，侧重 Agent 学习资料和开发者需求研究。
-尚未接入中国高校实习/竞赛网站，也不支持全网搜索或读取外部文章正文。
-已有的 `lesson1.py`、`lesson2.py`、`crawler.py` 和 `hn_items.json` 保留原样。
+当前项目根目录就是本 README 所在的 agent 目录；源码已统一到 internship_agent/，不再需要 dist 副本或 radar_agent 包。
+原有 .env 和 internship_data/ 保留在项目根目录，原来的运行命令继续可用。
 
-## 先跑起来
+根据岗位原文与个人档案，分析时间、出勤、远程、学习机会、技术差距和待遇。
+招聘方陈述、模型分析、未知信息分别展示；技术暂不匹配不会在模型分析前自动淘汰岗位。
 
-在项目目录执行：
+Python 3.10+，只用标准库。仓库不含示例数据、真实用户资料、密钥或数据库。
 
-```bash
-python3 -m radar_agent demo
-```
+## 启动
 
-此模式完全离线，使用标为 Demo 的固定样例和脚本化模型替身。
-它验证“模型提出工具调用 → Python 执行 → 返回工具结果 → 再调用 → 回答”的循环，
-不代表真实模型具有相应判断能力，示例 ID 也不是实际证据。
-
-独立运行真实采集工具（无需模型 Key）：
+在本仓库根目录运行：
 
 ```bash
-python3 -m radar_agent crawl --limit 5
-python3 -m radar_agent crawl --feed ask --limit 10
+python3 -m internship_agent init
 ```
 
-每次运行建立新目录，默认位于项目 `runs/`，不会覆盖之前的结果。
-采集过程中如有部分请求失败，会保存已取得的帖子和错误，并以 partial 状态退出。
+程序在本地生成 internship_data/profile.json、sources.json、mail.env；已有文件不会覆盖。
+填写真实个人档案；priorities 是关注维度，hard_constraints 明确哪些条件不可妥协。
+days_per_week 和 months 分别为可到岗天数和可持续月数，未知保留 null。
 
-## 接入真实模型
+sources.json 是来源配置数组，支持三类来源：
+
+- greenhouse：提供 type、name、board（目标公司公开招聘看板的 token）。
+- rss：提供 type、name、url（HTTPS 订阅地址）。
+- json：提供 type、name、path（本地真实岗位 JSON 文件的绝对路径）。
+
+WorldQuant 的公开看板 token 为 worldquant，可用于验证真实采集；不保证岗位持续开放或适合低年级学生。
+其配置可填写为 `[{"type":"greenhouse","name":"WorldQuant","board":"worldquant"}]`。
+尚未实现 BOSS、实习僧或学校网站专用采集器。
 
 ```bash
-cp .env.example .env
+python3 -m internship_agent sync
+python3 -m internship_agent report
 ```
 
-打开 `.env`，填写以下三个值（也可使用同名环境变量，环境变量优先）：
+不加 --ai 时输出简单规则基线，不调用模型。
 
-```dotenv
-LLM_API_KEY=你的密钥
-LLM_BASE_URL=提供商文档中的基础地址
-LLM_MODEL=支持工具调用的模型ID
-```
+## 模型分析
 
-例如基础地址的形状是 `https://api.openai.com/v1`，程序在末尾追加 `/chat/completions`。
-如果提供商的路径不是 `/v1`，按其官方文档填写，不要自动加 `/v1`。
-密钥只用于请求头，不进入模型上下文或运行日志。
-这个适配器要求接口支持 `tools`、`tool_choice=required/auto` 和工具结果消息；
-“OpenAI-compatible”并不保证所有提供商、所有模型都支持这些字段。
-不会读取 Codex/ChatGPT 登录凭据，也不会自动从其他配置目录寻找密钥。
-
-使用 DeepSeek 官方 API 时，目前可填写：
-
-```dotenv
-LLM_API_KEY=你的DeepSeek密钥
-LLM_BASE_URL=https://api.deepseek.com
-LLM_MODEL=deepseek-flash
-```
-
-程序自动为 `api.deepseek.com` 设置 `thinking.type=disabled`，因为官方思考模式
-不支持首轮使用的 `tool_choice=required`。本版不启用 DeepSeek 思考模式。
-该设置只对官方域名生效；第三方中转需按其文档核实参数。
-参考：[官方接入说明](https://api-docs.deepseek.com/)、
-[工具选择参数](https://api-docs.deepseek.com/api/create-chat-completion/)。
+在仓库根目录本地创建 .env，填写 LLM_API_KEY、LLM_BASE_URL、LLM_MODEL，或设置同名环境变量。
+采用支持工具调用的 Chat Completions 兼容接口；基础地址后自动追加 /chat/completions。
+提供商的模型ID请使用你账户实际可用的型号。不要在源码、截图或公开讨论中写入密钥。
 
 ```bash
-python3 -m radar_agent run "找出适合计算机大二学生学习的 Agent 项目，以及值得验证的开发者需求。每条附来源。"
+# 将“岗位ID”替换为 report 显示的真实ID
+python3 -m internship_agent report --ai --job-id 岗位ID
 ```
 
-运行会按提供商规则产生 API 费用。默认最多 6 次模型请求、12 次工具执行，
-每个工具又有帖子/评论数量上限；这不是金额上限。模型 POST 失败不自动重试。
-可用 `--max-steps 3` 限制模型轮数（可能导致采集完成但还没生成报告）。
-本机兼容服务可使用 localhost HTTP 地址及其要求的占位 Key。
+模型会收到用户档案及岗位原文，会产生提供商的API费用。
+可以用 --profile 指定另一份位于 internship_data/ 内的本地档案。
+结果写入 internship_data/latest-report.txt 和 latest-assessment.json，重跑会覆盖最近文件。
 
-## 哪里体现 Agent 机制
+流程：采集与去重 → 本地岗位原文＋用户档案 → 固定批次分析 → 校验格式和引用 → 机会证据卡。
+每批5条、最多6批，校验失败最多修正一次；超过30条须选择岗位或缩小输入池，不会静默漏评。
+引用存在不代表推论正确，也不能证明招聘方的承诺属实。工作强度、培养质量和资格例外需本人核实。
+不查询实时股价、不预测上市、不自动更新用户技能。
 
-`agent.py` 中的 `Agent.run()` 保存对话，循环调用模型。
-模型自己选择获取哪个列表、查看哪条帖子、是否阅读评论、何时回答。
-模型得到的工具调用是 JSON 数据，Python 校验后调用白名单中的函数。
-工具输出再次作为 `role=tool` 消息交回模型；不是采集一次再固定分类。
-返回纯文本时结束；用完预算却没有回答时标为 `budget_exhausted`，不伪装成功。
-最初要求模型取证；若接口忽略要求、直接回答，标为 `no_evidence`。
+## 可选邮件功能
 
-工具：
+在本地 internship_data/mail.env 填写 SMTP_HOST、SMTP_PORT、SMTP_SECURITY、SMTP_USER、SMTP_PASSWORD、SMTP_FROM、DAILY_TO。
+SMTP_SECURITY 支持 ssl/starttls，DAILY_TO 填本人邮箱；模型不读取邮箱密码。
 
-| 工具 | 作用 |
-| --- | --- |
-| `get_posts(feed, limit, offset)` | 获取 new/top/ask/show/job 列表的一批候选，每批最多 20 条 |
-| `get_post(post_id)` | 查看已知帖子详情和 HN 站内文本 |
-| `get_comments(post_id, limit)` | 最多 15 条评论样本，最多检查 30 个评论节点 |
+```bash
+python3 -m internship_agent daily
+# 下列命令才实际发送给本人
+python3 -m internship_agent daily --send
+```
 
-同一次运行缓存已读条目及列表快照，减少重复请求。评论按广度优先采样，不代表完整讨论。
-HTML 文本转为纯文本，每条正文限制 3000 字符。结果会声明外链正文尚未读取。
-工具只访问固定 HN API，不能执行 shell、任意代码、任意 URL 或任意路径写入。
-帖子和评论是待分析的数据，system prompt 明确要求忽略其中的指令。
-这不是完整的提示注入防护，也没有自动核验模型引用；有来源仍需人工检查结论。
+向招聘方投递由本人核实邮箱并逐封确认：
 
-## 看哪些文件
+```bash
+python3 -m internship_agent draft 岗位ID --to 招聘邮箱 --resume /绝对路径/简历.pdf
+python3 -m internship_agent review 邮件ID
+python3 -m internship_agent send 邮件ID
+```
 
-建议顺序：
+创建草稿时保存附件快照，review 导出实际邮件和PDF。send 要求在交互终端输入与当前版本绑定的确认文字。
+修改草稿：编辑导出的 draft.json，再运行 `edit 邮件ID --file 本地JSON路径`；替换附件加 --resume。
+SMTP失败不盲目重试：outbox 查看 sending/uncertain 后，本人检查邮箱，再用 `reconcile 邮件ID --outcome sent` 或 not-sent 登记。
+SMTP已接受不保证实际送达。程序不自动提交招聘网站表单。
+schedule-template 只生成 macOS 调度文件，不自动安装；运行 --help 查看各命令。
 
-1. `radar_agent/tools.py`：普通采集函数、参数说明、校验和工具注册。
-2. `radar_agent/agent.py`：核心的模型—工具循环以及停止条件。
-3. `radar_agent/llm.py`：对接模型接口。
-4. `radar_agent/__main__.py`：命令行和结果保存。
-5. `radar_agent/http.py`：网络请求、超时和错误处理。
-
-`runs/<本次运行>/` 包含：
-
-- `report.md`：最终回答或错误说明。
-- `result.json`：状态、轮数和调用数。
-- `events.jsonl`：一行一个事件，包含调用参数、工具结果和模型 usage（如果服务提供）。
-- `messages.json`：Agent 的完整模型对话；crawl 模式没有此文件。
-- `posts.json`：仅 crawl 模式，包含采集结果和单条错误。
-
-`completed` 代表正常交付回答，不代表内容一定正确。没有适合的机会是允许的结果。
-日志保存采集文本和任务内容，分享之前应自行检查是否包含不想公开的信息。
-
-## 测试与排查
+## 测试和代码
 
 ```bash
 python3 -m unittest discover -s tests -v
-python3 -m radar_agent --help
 ```
 
-测试用固定数据和模型替身，不需要网络或 Key。真实采集用 crawl 单独验证。
-真实模型端到端需要你配置提供商、模型和 Key，demo 不能替代这个验证。
-如果网络超时或证书报错，先检查网络、代理和 Python 证书配置；不要关闭证书验证。
-如果出现 401/404，核对 Key、基础地址、模型名；接口需要原生工具调用能力。
+测试使用代码内的虚构夹具和模型/邮件替身，不联网、不发送、不用密钥。
+core.py 负责采集与存储；research.py 负责机会分析；mail.py 负责人工审核邮件；__main__.py 串联命令。
+http.py 和 llm.py 是合并后的网络与模型适配，均位于 internship_agent/ 内。
+evaluate 保留旧规则排序基线，AI排名比较已停用；新的事实准确性评测仍需人工标注。
 
-可继续完善：增加 GitHub/高校官网工具，个人条件配置，结果去重、定期更新，
-再为来源准确性和需求判断建立小评测集。定时任务当前未创建。
+## Git 范围
 
-协议参考：[Hacker News 官方 API](https://github.com/HackerNews/API)、
-[Function calling](https://developers.openai.com/api/docs/guides/function-calling)。
+.gitignore 默认忽略所有文件，仅允许明确列出的源码、此文档和测试。
+init 生成的档案、邮箱配置、.env、简历、数据库、报告、调度文件、缓存都不应进入版本控制。
+新增必要源码时显式更新允许清单。不要用 git add -f 绕过规则。
+忽略规则不检查已允许源码中的内容，也不移除曾提交的秘密；提交前仍应检查差异。
+本项目不提供真实账户配置或用户资料。

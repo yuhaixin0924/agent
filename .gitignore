@@ -1,60 +1,45 @@
-# API 密钥与本地配置（示例模板可以提交）
+# 默认全部忽略。只发布经过确认的源码、测试与文档。
+*
+!/.gitignore
+!/.gitattributes
+!/README.md
+!/internship_agent/
+!/internship_agent/__init__.py
+!/internship_agent/__main__.py
+!/internship_agent/core.py
+!/internship_agent/http.py
+!/internship_agent/llm.py
+!/internship_agent/research.py
+!/internship_agent/mail.py
+!/internship_agent/schedule.py
+!/internship_agent/evaluate.py
+!/tests/
+!/tests/test_internship_agent.py
+
+# 以下是默认规则的明确补充，防止以后扩大允许范围时误收私人文件。
 .env
 .env.*
-!.env.example
-
-# macOS / Windows 系统生成文件
-.DS_Store
-.AppleDouble
-.LSOverride
-._*
-Thumbs.db
-Desktop.ini
-$RECYCLE.BIN/
-
-# Python 字节码与编译扩展
-__pycache__/
+*.env
+*.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets*.json
+/internship_data/
+/study_data/
+/runs/
+/dist/
+**/__pycache__/
 *.py[cod]
-*.so
-
-# 虚拟环境、打包和构建产物
-.venv/
-venv/
-build/
-dist/
-*.egg-info/
-.eggs/
-
-# 测试、检查工具的缓存与覆盖率报告
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-.coverage.*
-htmlcov/
-coverage.xml
-.tox/
-.nox/
-
-# C / C++ 编译与链接产物
-*.o
-*.obj
-*.a
-*.lib
-*.dylib
-*.dll
-*.exe
-*.out
-*.dSYM/
-
-# 编辑器交换文件、临时文件与日志
-*.swp
-*.swo
-*~
-*.tmp
-*.temp
+*.sqlite*
+*.db
+*.db-*
+*.jsonl
+*.eml
+*.ics
 *.log
+.DS_Store
 
-# 本项目的运行记录和爬虫输出
-runs/
-/hn_items.json
+# 新增必要源文件时，审核后在上方显式放行；不要强制添加密钥或用户资料。

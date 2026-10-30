@@ -1,4 +1,4 @@
-"""网络请求集中在这里；GET 可重试，模型 POST 不自动重试。"""
+"""网络适配：GET 可重试，模型 POST 不自动重试。"""
 
 import json
 import time
@@ -16,7 +16,7 @@ class NoRedirect(HTTPRedirectHandler):
         return None
 
 
-def request_json(url, *, payload=None, api_key=None, timeout=20):
+def request_json(url, *, payload=None, api_key=None, timeout=20, max_bytes=2_000_000):
     headers = {"Accept": "application/json", "User-Agent": "LearningRadar/0.1"}
     data = None
     if payload is not None:
@@ -30,9 +30,9 @@ def request_json(url, *, payload=None, api_key=None, timeout=20):
         try:
             request = Request(url, data=data, headers=headers)
             with build_opener(NoRedirect()).open(request, timeout=timeout) as response:
-                raw = response.read(2_000_001)
-            if len(raw) > 2_000_000:
-                raise NetworkError("响应超过 2 MB，停止读取。")
+                raw = response.read(max_bytes + 1)
+            if len(raw) > max_bytes:
+                raise NetworkError(f"响应超过 {max_bytes} 字节限制，停止读取。")
             return json.loads(raw.decode("utf-8"))
         except HTTPError as error:
             status = error.code
