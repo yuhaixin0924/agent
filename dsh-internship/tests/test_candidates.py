@@ -73,7 +73,7 @@ class CandidateTests(unittest.TestCase):
         past = {**PAGE, 'text': 'AI Agent 实习\n广州\n本科及以上\n截止日期：2025年12月31日'}
         self.assertEqual(screen(past)['screening'], 'expired')
         live = {**PAGE, 'text': 'AI Agent 实习\n广州\n本科及以上\n截止日期：2099年12月31日'}
-        self.assertEqual(screen(live)['screening'], 'signals_complete')
+        self.assertEqual(screen(live, cities=['广州'])['screening'], 'signals_complete')
         stale = {**PAGE, 'text': 'AI Agent 实习\n广州\n本科及以上\n2020-01-01 更新'}
         self.assertEqual(screen(stale)['screening'], 'needs_review')
 
@@ -101,7 +101,7 @@ class CandidateTests(unittest.TestCase):
         result = self.queue.report()
         self.assertTrue(result['html'].endswith('candidates.html'))
         html = (Path(self.tmp.name) / 'candidates.html').read_text(encoding='utf-8')
-        self.assertIn('广州实习候选看板', html)
+        self.assertIn('实习候选看板', html)
         self.assertIn('信号齐全', html)
         view = self.queue.view()
         self.assertTrue(view['ok'])

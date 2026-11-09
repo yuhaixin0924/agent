@@ -155,7 +155,25 @@
   },
   "internship_candidates_plan": {
     "type": "object",
-    "properties": {},
+    "properties": {
+      "mode": {
+        "type": "string",
+        "enum": [
+          "profile",
+          "baseline"
+        ],
+        "description": "默认profile：按当前档案；baseline：固定广州查询用于对比"
+      },
+      "extra_queries": {
+        "type": "array",
+        "maxItems": 8,
+        "items": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "description": "DSH根据用户目标补充的查询，含实习；不要包含个人身份信息"
+      }
+    },
     "required": [],
     "additionalProperties": false
   },

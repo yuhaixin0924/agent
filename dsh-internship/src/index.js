@@ -17,11 +17,11 @@ function hostSchema(schema) {
   return result
 }
 const descriptions = {
-  internship_candidates_plan: '获取广州技术实习固定搜索查询和来源白名单。使用DSH搜索逐条执行，结果交给candidates_add；不调用旧discover模型循环。',
-  internship_candidates_add: '保存一条固定查询的搜索结果URL并去重。仅URL线索，不能作为岗位证据；无结果传空数组，失败填写error，成功error为空。',
+  internship_candidates_plan: '按用户档案生成实习查询和来源白名单；mode=baseline保留固定查询对比。可用extra_queries补充搜索方向。计划不会执行搜索，用DSH搜索后将结果交给add。',
+  internship_candidates_add: '保存已登记查询的搜索结果URL并去重。仅URL线索，不能作为岗位证据；无结果传空数组，失败填写error，成功error为空。',
   internship_candidates_check: '读取一个未读候选的公开网页并保存快照、原文命中和未知原因。不调用模型，不自动重试；关键词命中不等于单岗或在招核验。',
-  internship_candidates_report: '返回候选队列、搜索漏斗和读取失败，导出candidates.json/txt，并生成 candidates.html 看板。累计报告不是新增日报；不足5条不能推断全网没有岗位。', 
-  internship_candidates_recheck: '按上限重新抓取已读候选页、刷新快照并重新判定在招/失效；只联网不调模型，失败逐条记录。复检通过且信号齐全才算 active。',
+  internship_candidates_report: '返回候选队列、搜索漏斗和读取失败，导出candidates.json/txt，并生成 candidates.html 看板。累计报告不是新增日报；不足5条不能推断全网没有岗位。',
+  internship_candidates_recheck: '按上限重新抓取已读候选页、刷新快照与失效信息；只联网不调模型，失败为状态未知。active仅表示近期读取成功的疑似详情页，不保证仍在招。',
   internship_candidates_view: '重新生成候选看板 candidates.html（漏斗、来源分布、查询记录、可筛选卡片），返回文件路径与统计；不读取网页、不调用模型。',
   internship_status: '检查实习插件独立数据库、快照数量、档案是否存在；不代表岗位仍在招。',
   internship_profile: '读取用户手动确认的档案；无档案先询问用户。不能将正在学当成已掌握。此工具不修改档案。',
@@ -29,7 +29,7 @@ const descriptions = {
   internship_read_snapshot: '按page_id和offset翻页读已保存快照；引用必须出自实际读到的连续原文。采集时间不是发布时间。',
   internship_record: '保存单个具体岗位证据卡。title/company须复制主页面原文，未知公司填空。引用逐条验证，失败返回具体条目；不得翻译或拼接引用。主页面必须是岗位详情，通用公司福利只作company_context。analysis仅为待核对分析；缺信息写unknowns。更新需提交完整证据卡。',
   internship_list: '分页查看已存岗位目录，每页20条，含规则初筛结果。技术关键词不构成淘汰理由；未确认条件不作硬约束。在招状态未知。',
-  internship_get: '读取完整岗位、证据、当前档案和规则初筛。结合证据解释实习时间、出勤、远程、技术学习和转正；缺项记未知，不能保证录取或培养质量。'
+  internship_get: '读取完整岗位、证据、当前档案和规则初筛。结合证据解释实习时间、出勤、远程、技术学习和转正；按照返回的review_guide区分原文事实、画像分析和未知项；缺项记未知，不能保证录取或培养质量。'
 }
 
 export function runBridge(tool, args, config = {}, signal) {

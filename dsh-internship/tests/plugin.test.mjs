@@ -19,6 +19,12 @@ test('raw DSH registration and real Python subprocess', async () => {
       assert.equal(value.ok,true)
       assert.equal(tool.output.render({},value)[0].type,'text')
     }
+    const plan=await runBridge('internship_candidates_plan',{extra_queries:['上海 后端 暑期 实习']},{dataDir:dir},signal)
+    assert.equal(plan.ok,true)
+    assert.ok(plan.queries.includes('上海 后端 暑期 实习'))
+    const added=await runBridge('internship_candidates_add',{query:'上海 后端 暑期 实习',urls:[],error:''},{dataDir:dir},signal)
+    assert.equal(added.ok,true)
+    assert.equal(added.search.search_execution_verified,false)
     const invalid=await runBridge('internship_list',{offset:true},{dataDir:dir},signal)
     assert.equal(invalid.ok,false)
     const missing=await runBridge('internship_get',{job_id:'不存在'},{dataDir:dir},signal)

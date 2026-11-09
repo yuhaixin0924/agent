@@ -88,6 +88,9 @@ class Backend:
     def close(self):
         self.store.db.close()
 
+    def current_profile(self):
+        return profile(self.root)
+
     def snapshot(self, page):
         """Internal only: no model-facing tool accepts supplied page text."""
         page = {**page, 'kind': 'public_web'}
@@ -168,6 +171,10 @@ class Backend:
         return {'job':job, 'card':card, 'profile':p, 'profile_version':digest(p),
                 'match':m, 'parsed_requirements':supported,
                 'listing_status':'unknown', 'warning':NOTICE,
+                'review_guide': {
+                    'sections': ['实际工作与经历联系', '时间地点和到岗冲突', '必需/优先技术与准备方向', '未知项与要问招聘方的问题', '下一步行动'],
+                    'instruction': '每项分别写原文事实（带引用）、结合档案的分析、未知项。当前档案可能已不同于保存证据卡时；重新核对，不把旧analysis直接当当前结论。技术关键词未命中不能单独淘汰。'
+                },
                 'limits':'规则仅核对明确的最低出勤/时长，并按正文中的城市线索做硬约束（需人工核对）；复杂表述、远程、年级、待遇由模型结合原文分析。score只是关键词命中数。'}
 
     def execute(self, tool, args):
@@ -178,7 +185,7 @@ class Backend:
             candidates = Candidates(self)
             action = tool.removeprefix('internship_candidates_')
             if action == 'plan':
-                return candidates.plan()
+                return candidates.plan(**args)
             if action == 'add':
                 return candidates.add(**args)
             if action == 'check':

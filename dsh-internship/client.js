@@ -45,12 +45,12 @@ window.__ModuleLoader__.load({
       }, [open])
       const frame = h("iframe", {
         className: "dshib-frame",
-        title: "广州实习候选看板",
+        title: "实习候选看板",
         src: `/dsh-internship/candidates.html?v=${nonce}`
       })
       const panel = h("div", {className: "dshib-panel"},
         h("div", {className: "dshib-head"},
-          h("span", {className: "dshib-title"}, "广州实习候选看板"),
+          h("span", {className: "dshib-title"}, "实习候选看板"),
           h("button", {className: "dshib-btn", onClick: () => setNonce((n) => n + 1)}, "刷新"),
           h("button", {className: "dshib-btn", onClick: () => window.open(`/dsh-internship/candidates.html?v=${nonce}`, "_blank", "noopener")}, "新窗口"),
           h("button", {className: "dshib-btn", onClick: () => setOpen(false)}, "关闭")
@@ -64,7 +64,7 @@ window.__ModuleLoader__.load({
       return h(react.Fragment, null,
         h("button", {
           className: "dshib-trigger",
-          title: "打开广州实习候选看板",
+          title: "打开实习候选看板",
           onClick: () => setOpen((v) => !v)
         }, h("span", {className: "dshib-dot"}), "实习看板"),
         open ? (reactDom && reactDom.createPortal

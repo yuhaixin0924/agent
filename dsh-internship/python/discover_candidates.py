@@ -4,7 +4,7 @@ from contextlib import closing
 import os
 from pathlib import Path
 from bridge import Backend
-from candidates import Candidates, QUERIES
+from candidates import Candidates
 from agent_snapshot.web import WebTools
 
 
@@ -13,6 +13,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--data-dir', required=True)
     parser.add_argument('--search-env', type=Path, help='Explicit dotenv file; reads only TAVILY_API_KEY')
+    parser.add_argument('--mode', choices=('baseline', 'profile'), default='baseline')
     parser.add_argument('--max-pages', type=int, choices=range(1, 31), default=10)
     args = parser.parse_args()
     key = os.environ.get('TAVILY_API_KEY', '').strip()
@@ -24,7 +25,8 @@ def main():
     web = WebTools(key)
     with closing(Backend(args.data_dir)) as backend:
         queue = Candidates(backend)
-        for query in QUERIES:
+        queries = queue.plan(mode=args.mode)['queries']
+        for query in queries:
             print('搜索：' + query, flush=True)
             try:
                 response = web.search(query)
@@ -40,7 +42,7 @@ def main():
         print(result['counts'])
         print(result['acceptance'])
         print('报告目录：' + str(backend.root))
-        return 1 if any(s['error'] for s in result['searches'][-len(QUERIES):]) else 0
+        return 1 if any(s['error'] for s in result['searches'][-len(queries):]) else 0
 
 
 if __name__ == '__main__':

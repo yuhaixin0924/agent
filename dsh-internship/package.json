@@ -1,6 +1,6 @@
 {
   "name": "dsh-internship",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "实习岗位证据核验与个人匹配工具；由 DSH 负责对话和规划",
   "type": "module",
@@ -40,6 +40,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-name/dsh-internship.git"
+    "url": "https://github.com/yuhaixin0924/agent.git",
+    "directory": "dsh-internship"
   }
 }
