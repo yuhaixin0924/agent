@@ -2,27 +2,73 @@
 
 这是原 `internship_agent` 的独立工具版。DSH 负责对话、搜索和下一步决策；插件负责读取公开网页、留存证据、保存岗位和规则初筛。插件自身不调用模型，无需新的 API key；DSH 自身的模型/搜索服务仍按其配置运行和计费。
 
-## 安装与第一次使用
+## 安装（小白版）
 
-需要 Node.js >=22、Python >=3.10。已在 macOS 桌面版 DSH `0.2.2-rc.1` 上实测工具注册、网页抓取、证据校验与候选看板。
+### 0. 先确认电脑上有这两样
 
-在 DSH 的终端命令已配置到 PATH 时：
-
-```bash
-cd /path/to/dsh-internship
-npm test
-# 安装到桌面版，随后重启 DSH / 在插件页重新加载
-# 安装会修改 DSH 的 desktop profile，不修改原 Python Agent。
-dsh plugin --profile desktop add /path/to/dsh-internship
-```
-
-本机 `dsh` 尚未加入 PATH，可以用应用自带 CLI：
+打开终端（macOS 的「终端」，Windows 的 PowerShell）：
 
 ```bash
-"/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" plugin --profile desktop add /path/to/dsh-internship
+node -v            # 需要 v22 或更高
+python3 --version  # 需要 3.10 或更高
 ```
 
-其他电脑用自己的绝对路径；也可 `npm pack` 后通过同一命令安装 `.tgz` 文件。bundle 声明在 `package.json`，自动挂载项在 `cordis.patch.yml`。没有自动修改你的 DSH 安装或启用任何定时任务。
+如果提示“找不到命令”，先去 [nodejs.org](https://nodejs.org) 和 [python.org](https://www.python.org) 装好再回来。
+
+### 1. 把代码下载到本地
+
+```bash
+git clone https://github.com/yuhaixin0924/agent.git
+cd agent/dsh-internship
+```
+
+不想用 git：在 GitHub 页面点 **Code → Download ZIP**，解压后进入 `agent-main/dsh-internship`。
+
+> 插件在仓库的**子目录**里，所以不能直接用 `dsh plugin add github:...` 一行安装，必须先下载到本地，再装这个文件夹。
+
+### 2. 把它装进 DSH
+
+先试：
+
+```bash
+dsh plugin --profile desktop add "$PWD"
+```
+
+如果提示 `dsh: command not found`，说明 DSH 的命令行没进 PATH，改用应用自带的 CLI（macOS 示例）：
+
+```bash
+"/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh" plugin --profile desktop add "$PWD"
+```
+
+Windows 用户把前面那段换成自己的安装路径，通常类似 `...\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd`。
+
+如果提示 **desktop profile 由应用独占**，就改用界面：打开 DSH → 设置 → 插件，在那里安装/启用；或者直接把 `dsh-internship` 文件夹的完整路径发给 DSH 助手，让它代装。
+
+安装只会往 DSH 的 `desktop` profile 里加一个插件行，**不会改你的原 Python Agent，也不会自动开启任何定时任务**。
+
+### 3. 重启 DSH 并确认
+
+完全退出 DSH 再打开（不是刷新页面），然后在「设置 → 插件」里确认 `dsh-internship` 是启用状态。
+
+新开一个对话，输入：
+
+> 调用 internship_status
+
+看到 `"ok": true` 就说明装好了。想跑测试可以执行 `npm test`，应当是 15 个 Python + 4 个 Node 测试全过。
+
+### 4. 第一次使用
+
+见下面的「用户档案」和「七个工具」两节。最短路径是：先填档案 → 给一个真实岗位链接 → 让 DSH 读页面、存证据、做分析。
+
+### 常见问题
+
+| 现象 | 原因与处理 |
+| --- | --- |
+| `dsh: command not found` | 用第 2 步里应用自带的 CLI 绝对路径 |
+| 装完看不到工具 | 没重启 DSH，或插件页里没启用 |
+| 提示 Python 找不到 | 在插件配置里填 `python` 的绝对路径，例如 `/opt/homebrew/bin/python3` |
+| 读网页失败 | 该站需要登录、验证码、JS 或 PDF；换公开来源，不要绕过 |
+| 想看数据存在哪 | 默认 `${DSH_HOME:-~/.dsh}/internship/`，与仓库无关，不要提交进 Git |
 
 在 DSH 对话中先输入：
 
