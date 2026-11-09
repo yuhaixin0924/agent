@@ -1,0 +1,226 @@
+{
+  "internship_status": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "internship_profile": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "internship_read_page": {
+    "type": "object",
+    "properties": {
+      "url": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2048
+      }
+    },
+    "required": [
+      "url"
+    ],
+    "additionalProperties": false
+  },
+  "internship_read_snapshot": {
+    "type": "object",
+    "properties": {
+      "page_id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2048
+      },
+      "offset": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "page_id",
+      "offset"
+    ],
+    "additionalProperties": false
+  },
+  "internship_record": {
+    "type": "object",
+    "properties": {
+      "primary_page_id": {
+        "type": "string"
+      },
+      "title": {
+        "type": "string"
+      },
+      "company": {
+        "type": "string"
+      },
+      "evidence": {
+        "type": "array",
+        "maxItems": 16,
+        "items": {
+          "type": "object",
+          "properties": {
+            "dimension": {
+              "type": "string",
+              "enum": [
+                "work",
+                "eligibility",
+                "period",
+                "attendance",
+                "remote",
+                "intensity",
+                "learning",
+                "conversion",
+                "skills",
+                "pay",
+                "benefits",
+                "company_context"
+              ]
+            },
+            "fact": {
+              "type": "string"
+            },
+            "quote": {
+              "type": "string"
+            },
+            "page_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "dimension",
+            "fact",
+            "quote",
+            "page_id"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "analysis": {
+        "type": "string"
+      },
+      "unknowns": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "next_step": {
+        "type": "string"
+      },
+      "reason": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "primary_page_id",
+      "title",
+      "company",
+      "evidence",
+      "analysis",
+      "unknowns",
+      "next_step",
+      "reason"
+    ],
+    "additionalProperties": false
+  },
+  "internship_list": {
+    "type": "object",
+    "properties": {
+      "offset": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "required": [
+      "offset"
+    ],
+    "additionalProperties": false
+  },
+  "internship_get": {
+    "type": "object",
+    "properties": {
+      "job_id": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2048
+      }
+    },
+    "required": [
+      "job_id"
+    ],
+    "additionalProperties": false
+  },
+  "internship_candidates_plan": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "internship_candidates_add": {
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "maxLength": 300
+      },
+      "urls": {
+        "type": "array",
+        "maxItems": 20,
+        "items": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      },
+      "error": {
+        "type": "string",
+        "maxLength": 500
+      }
+    },
+    "required": [
+      "query",
+      "urls",
+      "error"
+    ],
+    "additionalProperties": false
+  },
+  "internship_candidates_check": {
+    "type": "object",
+    "properties": {
+      "candidate_id": {
+        "type": "string",
+        "maxLength": 100
+      }
+    },
+    "required": [
+      "candidate_id"
+    ],
+    "additionalProperties": false
+  },
+  "internship_candidates_report": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "internship_candidates_view": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "internship_candidates_recheck": {
+    "type": "object",
+    "properties": {
+      "limit": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 20
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  }
+}

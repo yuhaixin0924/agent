@@ -1,0 +1,45 @@
+{
+  "name": "dsh-internship",
+  "version": "0.1.0",
+  "private": true,
+  "description": "实习岗位证据核验与个人匹配工具；由 DSH 负责对话和规划",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json",
+    "./client": {
+      "default": "./client.js"
+    }
+  },
+  "files": [
+    "README.md",
+    "client.js",
+    "cordis.patch.yml",
+    "python/*.py",
+    "python/agent_snapshot/*.py",
+    "schemas.json",
+    "snapshot-manifest.json",
+    "src/"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "python3 -m unittest discover -s tests -v && node --test tests/plugin.test.mjs",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-name/dsh-internship.git"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "python/agent_snapshot/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "python/agent_snapshot/core.py": "e51e04d498d7b7f44851044b2b26b0b49eda823cb14079bb89bf5f47f1343d51",
+  "python/agent_snapshot/discovery.py": "47608fdd1667761aea84f5fd28a054cf1c45bf8a378c6ff9260eb875e7c0aafb",
+  "python/agent_snapshot/http.py": "542e7780bef9148b5ae9848dd3f180659cacc9cc3a96d0161fdc5c72bb207936",
+  "python/agent_snapshot/research.py": "7dc93bdbe75527192d8fc825c2aa5555c6cca87b3f2bcbfbe14a1cc3728ff877",
+  "python/agent_snapshot/web.py": "f2e73c69dfe3d127754c165fb6e061b3f1b438afa4fcf978a749c37ccfe6556d"
+}

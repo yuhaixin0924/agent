@@ -1,0 +1,6 @@
+- insert:
+    - id: internship
+      name: dsh-internship
+      # config:
+      #   python: /absolute/path/to/python3
+      #   dataDir: /absolute/path/to/separate-plugin-data
