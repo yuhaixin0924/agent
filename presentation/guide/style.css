@@ -1,0 +1,25 @@
+:root { --slidev-theme-primary: #68ddd0; }
+.slidev-layout {
+  background: #101b2a;
+  color: #edf2f7;
+  padding: 40px 48px;
+  font-size: 22px;
+}
+.slidev-layout h1 { font-size: 36px; line-height: 1.3; font-weight: 700; margin: 16px 0 28px; }
+.slidev-layout.cover h1 { font-size: 56px; }
+.slidev-layout h1 + p, .slidev-layout.cover p { opacity: 1; }
+.slidev-layout p { line-height: 1.65; }
+.slidev-layout .guide-kicker { color: #68ddd0; font-size: 14px; letter-spacing: .1em; }
+.slidev-layout .guide-lead { font-size: 20px; color: #bdcad9; }
+.slidev-layout .guide-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; margin-top: 32px; font-size: 18px; }
+.slidev-layout .demo-button { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; border: 1px solid #68ddd0; color: #101b2a; background: #68ddd0; padding: 9px 16px; border-radius: 6px; font: inherit; }
+.slidev-layout .demo-button:hover { background: #a2eee5; }
+.slidev-layout .demo-button.secondary { color: #b7c6d8; border-color: #53657b; background: transparent; }
+.slidev-layout .demo-button:focus-visible, .slidev-layout a:focus-visible { outline: 3px solid #f4cc77; outline-offset: 4px; }
+.slidev-layout a { color: #68ddd0; }
+.slidev-layout .col-right { padding-left: 28px; }
+.slidev-layout .col-left { padding-right: 24px; border-right: 1px solid #34445a; }
+.slidev-layout .architecture-image { width: 100%; height: 210px; object-fit: contain; }
+.slidev-layout .guide-link-row { display: flex; align-items: center; gap: 18px; padding: 20px 0; border-bottom: 1px solid #34445a; }
+.slidev-layout .guide-page-no { position: absolute; bottom: 24px; right: 40px; color: #95a7bd; font-size: 16px; }
+.slidev-layout .slidev-code { font-size: 19px !important; line-height: 1.8 !important; }

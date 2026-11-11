@@ -1,0 +1,16 @@
+{
+  "name": "internship-slidev-demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev --port 3030",
+    "dev:guide": "slidev guide/skeleton.md --port 3031",
+    "build:guide": "slidev build guide/skeleton.md --out dist-guide",
+    "build": "slidev build",
+    "export": "slidev export"
+  },
+  "devDependencies": {
+    "@slidev/cli": "^53.1.0",
+    "@slidev/theme-default": "^0.25.0"
+  }
+}
