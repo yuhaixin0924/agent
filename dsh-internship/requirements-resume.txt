@@ -1,0 +1,2 @@
+# Optional PDF extraction; DOCX / TXT / MD use the Python standard library.
+pypdf>=5,<7

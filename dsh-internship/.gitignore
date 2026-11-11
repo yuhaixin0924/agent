@@ -1,6 +1,7 @@
 *
 !/.gitignore
 !/package.json
+!/requirements-resume.txt
 !/cordis.patch.yml
 !/README.md
 !/开发记录.md

@@ -8,6 +8,6 @@ try {
   const tools=[]
   apply({tools:{register:t=>tools.push(t)}},{dataDir:dir})
   const result=await tools.find(t=>t.name==='internship_status').execute({}, {signal:new AbortController().signal})
-  if (!result.ok || tools.length!==7) throw new Error('smoke failed')
+  if (!result.ok || tools.length!==15) throw new Error('smoke failed')
   console.log(JSON.stringify({registered:tools.map(t=>t.name),result},null,2))
 } finally {await rm(dir,{recursive:true,force:true})}

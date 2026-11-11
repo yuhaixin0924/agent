@@ -37,35 +37,46 @@ window.__ModuleLoader__.load({
     function BoardAction() {
       const [open, setOpen] = react.useState(false)
       const [nonce, setNonce] = react.useState(0)
+      const [tab, setTab] = react.useState('profile')
+      const dirty = react.useRef(false)
+      const close = () => {
+        if (!dirty.current || window.confirm('档案还有尚未保存的修改，确定关闭吗？')) setOpen(false)
+      }
+      react.useEffect(() => {
+        const onMessage = (event) => {
+          if (event.origin === window.location.origin && event.data?.source === 'dsh-internship-profile') dirty.current = !!event.data.dirty
+        }
+        window.addEventListener('message', onMessage)
+        return () => window.removeEventListener('message', onMessage)
+      }, [])
       react.useEffect(() => {
         if (!open) return
-        const onKey = (event) => { if (event.key === "Escape") setOpen(false) }
+        const onKey = (event) => { if (event.key === "Escape") close() }
         window.addEventListener("keydown", onKey)
         return () => window.removeEventListener("keydown", onKey)
       }, [open])
-      const frame = h("iframe", {
-        className: "dshib-frame",
-        title: "实习候选看板",
-        src: `/dsh-internship/candidates.html?v=${nonce}`
-      })
+      const path = tab === 'profile' ? 'profile.html' : 'candidates.html'
       const panel = h("div", {className: "dshib-panel"},
         h("div", {className: "dshib-head"},
-          h("span", {className: "dshib-title"}, "实习候选看板"),
-          h("button", {className: "dshib-btn", onClick: () => setNonce((n) => n + 1)}, "刷新"),
-          h("button", {className: "dshib-btn", onClick: () => window.open(`/dsh-internship/candidates.html?v=${nonce}`, "_blank", "noopener")}, "新窗口"),
-          h("button", {className: "dshib-btn", onClick: () => setOpen(false)}, "关闭")
+          h("span", {className: "dshib-title"}, "实习助手"),
+          h("button", {className: "dshib-btn", 'aria-pressed': tab === 'profile', onClick: () => setTab('profile')}, "个人档案"),
+          h("button", {className: "dshib-btn", 'aria-pressed': tab === 'candidates', onClick: () => setTab('candidates')}, "候选看板"),
+          h("button", {className: "dshib-btn", onClick: () => { if (!dirty.current || window.confirm('刷新会放弃未保存的档案修改，继续吗？')) {dirty.current = false; setNonce((n) => n + 1)} }}, "刷新"),
+          h("button", {className: "dshib-btn", onClick: () => window.open(`/dsh-internship/${path}?v=${nonce}`, "_blank", "noopener")}, "新窗口"),
+          h("button", {className: "dshib-btn", onClick: close}, "关闭")
         ),
-        frame
+        h("iframe", {className: "dshib-frame", title: "个人实习档案", style: {display: tab === 'profile' ? 'block' : 'none'}, src: `/dsh-internship/profile.html?v=${nonce}`}),
+        h("iframe", {className: "dshib-frame", title: "实习候选看板", style: {display: tab === 'candidates' ? 'block' : 'none'}, src: `/dsh-internship/candidates.html?v=${nonce}`})
       )
       const overlay = h("div", {
         className: "dshib-overlay",
-        onMouseDown: (event) => { if (event.target === event.currentTarget) setOpen(false) }
+        onMouseDown: (event) => { if (event.target === event.currentTarget) close() }
       }, panel)
       return h(react.Fragment, null,
         h("button", {
           className: "dshib-trigger",
-          title: "打开实习候选看板",
-          onClick: () => setOpen((v) => !v)
+          title: "打开个人档案与实习候选看板",
+          onClick: () => {if (open) close(); else {dirty.current = false; setOpen(true)}}
         }, h("span", {className: "dshib-dot"}), "实习看板"),
         open ? (reactDom && reactDom.createPortal
           ? reactDom.createPortal(overlay, document.body)

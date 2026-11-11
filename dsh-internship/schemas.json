@@ -240,5 +240,163 @@
     },
     "required": [],
     "additionalProperties": false
+  },
+  "internship_profile_propose": {
+    "type": "object",
+    "properties": {
+      "base_version": {
+        "type": "string",
+        "minLength": 64,
+        "maxLength": 64
+      },
+      "changes": {
+        "type": "object",
+        "properties": {
+          "stage": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "background": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "growth_goal": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "additional_constraints": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "skills_known": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "maxItems": 40
+          },
+          "skills_learning": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "maxItems": 40
+          },
+          "cities": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "maxItems": 40
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "maxItems": 40
+          },
+          "priorities": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "maxItems": 40
+          },
+          "hard_constraints": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "maxItems": 40
+          },
+          "accepted_degree_labels": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "maxItems": 40
+          },
+          "days_per_week": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          },
+          "months": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 120
+          }
+        },
+        "additionalProperties": false
+      },
+      "clear_fields": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "stage",
+            "background",
+            "growth_goal",
+            "additional_constraints",
+            "skills_known",
+            "skills_learning",
+            "cities",
+            "keywords",
+            "priorities",
+            "hard_constraints",
+            "accepted_degree_labels",
+            "days_per_week",
+            "months"
+          ]
+        },
+        "maxItems": 13
+      },
+      "restore_previous": {
+        "type": "string",
+        "enum": [
+          "yes",
+          "no"
+        ]
+      },
+      "reason": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2000
+      }
+    },
+    "required": [
+      "base_version",
+      "reason"
+    ],
+    "additionalProperties": false
+  },
+  "internship_profile_apply": {
+    "type": "object",
+    "properties": {
+      "draft_id": {
+        "type": "string",
+        "minLength": 32,
+        "maxLength": 32
+      },
+      "confirmation": {
+        "type": "string",
+        "enum": [
+          "user_confirmed"
+        ]
+      }
+    },
+    "required": [
+      "draft_id",
+      "confirmation"
+    ],
+    "additionalProperties": false
   }
 }

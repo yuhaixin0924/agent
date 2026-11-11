@@ -8,15 +8,17 @@ import {apply, runBridge} from '../src/index.js'
 test('raw DSH registration and real Python subprocess', async () => {
   const dir = await mkdtemp(join(tmpdir(),'internship-plugin-'))
   try {
+    await writeFile(join(dir,'profile.json'), JSON.stringify({stage:'大三',cities:['广州']}), 'utf8')
     const tools=[]
     apply({tools:{register:t=>tools.push(t)}},{dataDir:dir})
-    assert.equal(tools.length,13)
+    assert.equal(tools.length,15)
     assert.ok(tools.every(t => typeof t.description === 'string'))
     const signal=new AbortController().signal
     for (const name of ['internship_status','internship_profile']) {
       const tool=tools.find(t=>t.name===name)
       const value=await tool.execute({}, {signal})
       assert.equal(value.ok,true)
+      if (name === 'internship_profile') assert.equal(value.profile.stage,'大三')
       assert.equal(tool.output.render({},value)[0].type,'text')
     }
     const plan=await runBridge('internship_candidates_plan',{extra_queries:['上海 后端 暑期 实习']},{dataDir:dir},signal)
@@ -38,7 +40,7 @@ test('pre-cancelled calls do not start subprocess',async()=> {
 test('missing Python executable gives actionable error',async()=> {
   await assert.rejects(runBridge('internship_status',{}, {python:'/nonexistent/python'}),/Python/)
 })
-test('in-flight cancellation kills subprocess',async()=> {
+test('in-flight cancellation kills subprocess', {skip: process.platform === 'win32' ? 'POSIX executable fixture; Windows uses the pre-cancelled check' : false}, async()=> {
   const dir=await mkdtemp(join(tmpdir(),'internship-cancel-'))
   try {
     const python=join(dir,'slow-python')

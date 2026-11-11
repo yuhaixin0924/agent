@@ -21,6 +21,7 @@
     "python/agent_snapshot/*.py",
     "schemas.json",
     "snapshot-manifest.json",
+    "requirements-resume.txt",
     "src/"
   ],
   "dsh": {
@@ -35,7 +36,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "test": "python3 -m unittest discover -s tests -v && node --test tests/plugin.test.mjs",
+    "test": "node scripts/test.mjs",
     "smoke": "node scripts/smoke.mjs"
   },
   "license": "MIT",

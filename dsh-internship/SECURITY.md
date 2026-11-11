@@ -3,7 +3,7 @@
 ## 仓库里不会出现的东西
 
 - `.env`、`*.env`、任何 API key、账号密码、Cookie、私钥
-- `state.sqlite3` 数据库、`profile.json` 个人档案
+- `state.sqlite3` 数据库、`profile.json` 个人档案及上一版备份 `profile.json.bak`
 - 网页快照、抓取日志、运行报告（`candidates.json` / `candidates.html` / `sources.json`）
 - `node_modules/`、`__pycache__/`、`*.pyc`、`*.tgz`
 - 本机绝对路径与用户名（README 中已替换为 `/path/to/...`）
