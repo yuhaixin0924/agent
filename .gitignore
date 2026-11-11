@@ -6,6 +6,8 @@
 !/app.py
 !/requirements-ui.txt
 !/DESIGN.md
+!/docs/
+!/docs/independent-agent-archive.md
 !/internship_agent/chat.py
 !/tests/test_chat.py
 !/tests/test_ui.py
@@ -28,6 +30,7 @@
 !/dsh-internship/.gitignore
 !/dsh-internship/LICENSE
 !/dsh-internship/README.md
+!/dsh-internship/开发记录.md
 !/dsh-internship/SECURITY.md
 !/dsh-internship/client.js
 !/dsh-internship/cordis.patch.yml
