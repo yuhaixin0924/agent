@@ -1,4 +1,24 @@
 import { profilePage } from './profile-page.js'
+import { readFileSync } from 'node:fs'
+
+// Fixed, packaged assets only: no request path is ever used as a filesystem path.
+export const profileAssets = {
+  '/dsh-internship/assets/cat-teacher.png': ['cat-teacher.png', 'image/png'],
+  '/dsh-internship/assets/xiaolai-title.woff': ['xiaolai-title.woff', 'font/woff']
+}
+
+export function serveProfileAsset(req, res) {
+  if (!['GET', 'HEAD'].includes(req.method)) { res.statusCode = 405; res.end(); return }
+  const asset = profileAssets[new URL(req.url, 'http://local').pathname]
+  if (!asset) { res.statusCode = 404; res.end(); return }
+  try {
+    const body = readFileSync(new URL('./assets/' + asset[0], import.meta.url))
+    res.setHeader('content-type', asset[1])
+    res.setHeader('cache-control', 'no-cache')
+    res.setHeader('x-content-type-options', 'nosniff')
+    res.end(req.method === 'HEAD' ? undefined : body)
+  } catch { res.statusCode = 404; res.end() }
+}
 
 function send(res, status, value) {
   res.statusCode = status
@@ -21,7 +41,7 @@ export function serveProfilePage(req, res) {
   res.setHeader('content-type', 'text/html; charset=utf-8')
   res.setHeader('cache-control', 'no-store')
   res.setHeader('x-content-type-options', 'nosniff')
-  res.setHeader('content-security-policy', "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'")
+  res.setHeader('content-security-policy', "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; frame-ancestors 'self'; base-uri 'none'; form-action 'none'")
   res.end(req.method === 'HEAD' ? undefined : profilePage)
 }
 

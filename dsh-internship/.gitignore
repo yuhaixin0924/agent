@@ -9,6 +9,10 @@
 !/snapshot-manifest.json
 !/src/
 !/src/*.js
+!/src/assets/
+!/src/assets/cat-teacher.png
+!/src/assets/xiaolai-title.woff
+!/src/assets/README.md
 !/python/
 !/python/*.py
 !/python/agent_snapshot/

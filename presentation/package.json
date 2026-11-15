@@ -3,6 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev:demo": "slidev demo/main.md --port 3032",
+    "build:demo": "slidev build demo/main.md --out dist-demo",
     "dev": "slidev --port 3030",
     "dev:guide": "slidev guide/skeleton.md --port 3031",
     "build:guide": "slidev build guide/skeleton.md --out dist-guide",

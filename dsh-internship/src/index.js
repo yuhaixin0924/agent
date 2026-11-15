@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { resolve, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { createProfileHandler, createResumeHandler, serveProfilePage } from './profile-web.js'
+import { createProfileHandler, createResumeHandler, serveProfilePage, profileAssets, serveProfileAsset } from './profile-web.js'
 
 export const name = 'dsh-internship'
 export const inject = ['tools']
@@ -113,6 +113,9 @@ export function apply(ctx, config = {}) {
   // the dashboard through these two same-origin routes.
   if (typeof ctx.inject === 'function') {
     ctx.inject(['webServer'], (web) => {
+      for (const path of Object.keys(profileAssets)) {
+        web.effect(() => web.webServer.register({kind: 'exact', path, handler: serveProfileAsset}), 'internship: profile asset ' + path)
+      }
       web.effect(() => web.webServer.register({
         kind: 'exact', path: '/dsh-internship/profile.html', handler: serveProfilePage
       }), 'internship: profile form')

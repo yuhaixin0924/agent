@@ -1,6 +1,26 @@
-# Slidev 协作样稿
+# Slidev 汇报与协作样稿
 
-四页小样用于验证编辑与预览，还不是完整汇报稿。
+## 当前汇报稿（3032）
+
+正在协作的汇报稿入口是 `demo/main.md`，正文按小节存放在 `demo/sections/01-intro.md` 至 `05-closing.md`。公共样式为 `demo/style.css`，人物图片和本地字体位于 `demo/public/assets/`、`demo/public/fonts/`。
+
+从仓库根目录执行：
+
+```powershell
+cd presentation
+npm ci
+npm run dev:demo
+```
+
+打开 http://localhost:3032 。保存 Markdown 或样式后，页面自动更新。后续启动只需在 `presentation` 目录运行 `npm run dev:demo`；浏览器预览需要该进程保持运行。
+
+构建当前汇报稿使用 `npm run build:demo`，输出到 `demo/dist-demo/`。
+
+Git 包含汇报源码、依赖锁文件、所用图片与字体；依赖目录、构建产物和预览截图保留在本地。
+
+正式汇报的分工、时间安排与实操脚本见 [汇报分工与实操脚本](./demo/汇报分工与实操脚本.md)。`demo/profiles/` 是三份虚构演示档案，还没有写入正在使用的 DSH 数据目录。
+
+原有 `slides.md` 是四页协作小样，使用下面的 3030 端口启动方式。
 
 ## 语法指南与练习骨架
 

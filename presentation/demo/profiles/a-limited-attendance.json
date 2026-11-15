@@ -1,0 +1,13 @@
+{
+  "stage": "大三本科在读",
+  "background": "虚构教学档案，有 Python 课程项目和基础后端练习经历，不代表真实用户。",
+  "skills_known": ["Python", "SQL", "Git"],
+  "skills_learning": ["Agent 开发", "FastAPI"],
+  "cities": ["广州"],
+  "keywords": ["Python", "后端", "Agent"],
+  "days_per_week": 2,
+  "months": 6,
+  "hard_constraints": ["days_per_week", "months", "city"],
+  "priorities": ["出勤安排", "实际开发内容", "学习机会"],
+  "growth_goal": "希望参与真实后端开发并了解 Agent 工程；正在学习的技能不视为已掌握。"
+}
