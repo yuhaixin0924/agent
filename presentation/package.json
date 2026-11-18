@@ -12,7 +12,10 @@
     "export": "slidev export"
   },
   "devDependencies": {
+    "@shikijs/langs": "^4.6.0",
+    "@shikijs/themes": "^4.6.0",
     "@slidev/cli": "^53.1.0",
-    "@slidev/theme-default": "^0.25.0"
+    "@slidev/theme-default": "^0.25.0",
+    "shiki": "^4.6.0"
   }
 }

@@ -128,3 +128,67 @@
 .demo-speakers .demo-question:nth-child(2) { align-self: flex-start; }
 .questioner-avatar { position: absolute; left: -105px; top: 12px; width: 82px; height: 94px; object-fit: contain; margin: 0 !important; }
 .demo-question:nth-child(2) .questioner-avatar { left: auto; right: -105px; top: 7px; }
+
+/* 汇报的框架与局限：沿用浅绿底色和蓝绿色卡片。 */
+.team-light { display: grid; grid-template-columns: 116px 20px minmax(0,1fr) 20px 116px; gap: 5px; align-items: center; margin-top: 42px; }
+.team-light-arrow { color: #65a696; text-align: center; font-size: 22px; }
+.person-light { min-height: 179px; padding: 17px 12px; border: 1px solid #b8dbe5; border-radius: 10px; background: #e4f4f9; }
+.person-light.result { border-color: #c4dcbd; background: #e5f3de; }
+.person-light span, .person-light strong, .team-light-parts span, .team-light-parts strong { display: block; }
+.person-light span, .team-light-parts span { font-size: 14px; color: #4b857a; }
+.person-light strong { margin-top: 10px; font-size: 18px; }
+.person-light p, .team-light-parts p { margin: 9px 0 0; color: #587579; font-size: 13px; line-height: 1.6; }
+.assistant-light { padding: 15px 12px; border: 1.5px solid #b7d9c4; border-radius: 11px; background: #e5f4e7; }
+.assistant-light > b { color: #397b63; font-size: 15px; }
+.team-light-parts { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 7px; margin-top: 11px; }
+.team-light-parts > div { min-height: 133px; padding: 11px; border-radius: 8px; background: #eff8f4; }
+.team-light-parts > div:nth-child(1) { background: #e8eaf8; }
+.team-light-parts > div:nth-child(2) { background: #e2f2f8; }
+.team-light-parts > div:nth-child(3) { background: #e9f5df; }
+.team-light-parts strong { margin-top: 7px; font-size: 15px; }
+
+/* 从原有互动组件复用逻辑，外观跟随本套演示。 */
+.slidev-layout .loop-canvas, .slidev-layout .loop-aside, .slidev-layout .detail-panel { background: #e6f5f6 !important; border-color: #b8dbe5 !important; }
+.slidev-layout .loop-aside h3, .slidev-layout .detail-header h3 { color: #29464a !important; }
+.slidev-layout .aside-kicker, .slidev-layout .detail-label { color: #397b63 !important; }
+.slidev-layout .aside-body, .slidev-layout .principle p, .slidev-layout .detail-text, .slidev-layout .detail-result { color: #4b6b70 !important; }
+.slidev-layout .example-box { color: #426d6a !important; background: #f4fbf3 !important; border-color: #77bfa8 !important; }
+.slidev-layout .principle { border-color: #c2dfd8 !important; }
+.slidev-layout .principle span { color: #397b63 !important; }
+.slidev-layout .connection { stroke: #83b4ae !important; }
+.slidev-layout .edge-label { fill: #547c7d !important; }
+.slidev-layout .loop-node rect { fill: #e0f0f8 !important; stroke: #9ecbd8 !important; }
+.slidev-layout .loop-node.active rect, .slidev-layout .loop-node:hover rect, .slidev-layout .loop-node:focus-visible rect { fill: #c6e9d8 !important; stroke: #4a9f83 !important; }
+.slidev-layout .node-num { fill: #4c9280 !important; }.slidev-layout .node-title { fill: #29464a !important; }.slidev-layout .node-actor { fill: #56777b !important; }
+.slidev-layout .controls button, .slidev-layout .code-toggle, .slidev-layout .close-detail { background: #e1f1ec !important; color: #326d60 !important; border-color: #a8d2c4 !important; }
+.slidev-layout .controls button.primary { background: #8ccab6 !important; color: #173f36 !important; border-color: #6db39d !important; }
+.slidev-layout .stage { background: #e1f1f7 !important; border-color: #b2d7e2 !important; color: #29464a !important; }
+.slidev-layout .stage:nth-of-type(4n + 2) { background: #e8edf9 !important; border-color: #c3c9e9 !important; }
+.slidev-layout .stage:nth-of-type(4n + 3) { background: #e7f4e3 !important; border-color: #c2dbb6 !important; }
+.slidev-layout .stage:nth-of-type(4n) { background: #f9efdf !important; border-color: #e2cdae !important; }
+.slidev-layout .stage.selected, .slidev-layout .stage:hover, .slidev-layout .stage:focus-visible { border-color: #66ad97 !important; outline-color: #85c8b7 !important; }
+.slidev-layout .stage-number, .slidev-layout .stage-hint, .slidev-layout .stage-arrow { color: #428c7a !important; }
+.slidev-layout .stage-actor, .slidev-layout .overview-route, .slidev-layout .overview-caption { color: #58767d !important; }
+.slidev-layout .overview-card, .slidev-layout .mini-block { background: #f3faf9 !important; border-color: #b9dcd8 !important; }
+.slidev-layout .overview-card.result { background: #edf8e8 !important; border-color: #c0dcb7 !important; }
+.slidev-layout .overview-card span, .slidev-layout .mini-block b, .slidev-layout .source-guide b { color: #397b63 !important; }
+.slidev-layout .overview-card strong, .slidev-layout .mini-block span, .slidev-layout .source-guide span { color: #36595e !important; }
+.slidev-layout .overview-route i { background: #8dbfae !important; }
+.slidev-layout .source-guide > div { border-color: #c4dfd8 !important; }
+.slidev-layout .source-link { color: #2e7971 !important; }
+
+.limits-light { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 28px; }
+.limits-card { min-height: 280px; padding: 23px 24px; border: 1.5px solid #b8dbe5; border-radius: 13px; background: #e4f4f9; }
+.limits-card.next { background: #e9f5e1; border-color: #c6dfb9; }
+.limits-card span { color: #51968b; font: 17px 'Xiaolai', cursive; }
+.limits-card h2 { margin: 12px 0 17px; font-size: 23px; }
+.limits-card ul { margin: 0; padding-left: 20px; color: #527075; font-size: 17px; line-height: 1.75; }
+.limits-card li + li { margin-top: 8px; }
+.closing-light { padding: 25px 15px; }
+.closing-light h1 { margin-top: 45px; font-size: 45px; line-height: 1.5; }
+.closing-light p { color: #5b777b; font-size: 22px; }
+.closing-light strong { display: block; margin-top: 48px; color: #397b63; font-size: 25px; }
+
+/* 人物只点缀标题旁边，主体图表和交互保持完整。 */
+.slidev-layout.decorated-page { position: relative; }
+.decorated-page .slide-character { position: absolute; top: 22px; right: 62px; width: 108px; height: 110px; object-fit: contain; pointer-events: none; }

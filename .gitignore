@@ -9,6 +9,10 @@
 !/presentation/slides.md
 !/presentation/style.css
 !/presentation/README.md
+!/presentation/components/
+!/presentation/components/AgentExplorer.vue
+!/presentation/components/AgentLoop.vue
+!/presentation/components/CodeSnippet.vue
 !/presentation/public/
 !/presentation/public/candidates.html
 !/presentation/guide/
@@ -20,6 +24,9 @@
 !/presentation/demo/
 !/presentation/demo/main.md
 !/presentation/demo/style.css
+!/presentation/demo/components/
+!/presentation/demo/components/AgentExplorer.vue
+!/presentation/demo/components/AgentLoop.vue
 !/presentation/demo/sections/
 !/presentation/demo/sections/*.md
 !/presentation/demo/public/
@@ -29,6 +36,10 @@
 !/presentation/demo/public/assets/questioner-brown.png
 !/presentation/demo/public/assets/questioner-purple.png
 !/presentation/demo/public/assets/questioner-teal-hat.png
+!/presentation/demo/public/assets/mofuchen-green-question.webp
+!/presentation/demo/public/assets/mofuchen-green-excited.webp
+!/presentation/demo/public/assets/mofuchen-green-thumbs.webp
+!/presentation/demo/public/assets/mofuchen-orange-question.webp
 !/presentation/demo/public/fonts/
 !/presentation/demo/public/fonts/Xiaolai-Regular.ttf
 !/presentation/demo/public/fonts/LXGWMarkerGothic-Regular.ttf

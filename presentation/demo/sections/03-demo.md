@@ -1,23 +1,10 @@
 ---
 layout: default
-class: chapter-page
+class: demo-page
 routeAlias: demo
 ---
 
-<Link to="agenda" class="chapter-number" aria-label="目录">03</Link>
-
-# 功能的实操展示
-
-<p class="chapter-lead">双档案推荐对比 · 追问、质疑与修改</p>
-
-
----
-layout: default
-class: demo-page
-routeAlias: demo-profiles
----
-
-<div class="demo-label">01 / 同一批岗位，两份简历</div>
+<div class="demo-label">03 / 同一批岗位，两份简历</div>
 
 # 条件只差一点，推荐会有什么不同？
 
@@ -51,7 +38,7 @@ class: demo-page
 routeAlias: demo-compare
 ---
 
-<div class="demo-label">01 / 同一批岗位，两份简历</div>
+<div class="demo-label">03 / 同一批岗位，两份简历</div>
 
 # 岗位相同，分别给出推荐与依据
 
@@ -80,7 +67,7 @@ class: demo-page
 routeAlias: demo-question
 ---
 
-<div class="demo-label">02 / 追问、质疑与修改</div>
+<div class="demo-label">03 / 追问、质疑与修改</div>
 
 # 这个推荐，为什么适合我？
 
@@ -103,7 +90,7 @@ class: demo-page
 routeAlias: demo-revise
 ---
 
-<div class="demo-label">02 / 追问、质疑与修改</div>
+<div class="demo-label">03 / 追问、质疑与修改</div>
 
 # 把质疑说具体，再看分析怎样变化
 
